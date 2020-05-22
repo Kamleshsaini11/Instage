@@ -1,0 +1,58 @@
+.thumbnail img{
+    width:100%;
+}
+.thumbnail{
+    padding:0;
+}
+.thumbnail .caption-full{
+    padding:10px;
+}
+.deleteform{
+    display:inline;
+}
+
+.glyphicon-heart{
+    color:#e4405f;
+    font-size: 30px;
+}
+.glyphicon-comment{
+    color:blue;
+    font-size:30px;
+    margin-left: 20px;
+}
+body{
+    padding:70px;
+    font-family: 'Lobster Two', cursive;
+    letter-spacing: 2px;
+    font-size: 2rem;
+}
+#devprofile{
+    float:left;
+    border-radius: 12%;
+    /* height:200px;
+    width: 100%; */
+    /* Display:block; */
+    max-width:400px;
+    margin:0 0 20px;
+}
+#aboutname{
+    font-size: 30px;
+    font-weight: 800;
+    color: black;
+    margin-bottom: 0;
+}
+.aboutdown{
+    font-size: 17px;
+    font-weight: 100;
+    color:gray;
+    margin-top:0;
+    margin-bottom: 10px;
+}
+#socfoot{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#aboutinfo{
+    float:left;
+
+}
