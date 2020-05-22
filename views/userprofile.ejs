@@ -1,0 +1,53 @@
+<%- include("./partials/header.ejs") %>
+<style>
+  .thumbnail{
+    border: 0px white solid;
+  }
+  #na{
+    text-align: center;
+    text-transform: capitalize;
+  }
+  
+</style>
+
+
+<div class="container">
+  <div id="fir" class="row">
+    <div class="col-sm-12 col-lg-6">
+        <div class="thumbnail">
+          <img src="<%= currentuser.avatar%>" alt="No Profile" class="img-circle">
+          <div class="caption">
+          <h3 id= "na"><strong><%= currentuser.firstname%> <%= currentuser.lastname%></strong></h3>
+        </div>
+    </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+      <h3><%= currentuser.username%></h3>
+      <h3>Email : <%= currentuser.email%></h3>
+    </div>
+  </div>
+<hr>
+
+  <div id="rest" class="row">
+    <div class="jumbotron">
+
+    
+    <% campgrounds.forEach(function(campground) { %>
+      <div class="col-md-4 col-sm-12">
+          <div class="thumbnail">
+              <a href="/campgrounds/<%= campground._id %>"><img src="<%= campground.image %>" alt="Not Available"> </a>
+              <div class="caption">
+                  <h4><%= campground.name %></h4>
+              </div>
+              <p>
+                  <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
+              </p>
+          </div>
+      </div>
+  <% }) %>
+  </div>
+  </div>
+</div>
+   
+
+<%- include("./partials/footer.ejs") %>

@@ -1,0 +1,47 @@
+<%- include("../partials/header.ejs") %>
+
+<style>
+    #top{
+        background: url('https://images.unsplash.com/photo-1570863102242-7d03ca0f4bd0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1391&q=80');
+        background-position: center;
+        background-size: cover;
+    }
+    #front{
+        text-align: center;
+    }
+</style>
+<div  class="row">
+    <div class="col-sm-12 col-lg-12">
+        <header id="top" class="jumbotron">
+            <div id="front" class="conatainer">
+                <h1>Welcome To Instage!</h1>
+                <p>View our hand-picked posts from all over the world</p>
+                
+            </div>
+        </header>
+    </div>
+
+</div>
+<div class="container">
+    
+    <p>
+        <a class="btn btn-primary btn-lg"href="/campgrounds/new">Add New Post</a>
+        
+        </p>
+    <div class="text-center row" style="display:flex; flex-wrap:wrap;">
+        <% campgrounds.forEach(function(campground) { %>
+            <div class="col-md-4 col-sm-12">
+                <div class="thumbnail">
+                    <a href="/campgrounds/<%= campground._id %>"><img src="<%= campground.image %>" alt="Not Available"> </a>
+                    <div class="caption">
+                        <h4><%= campground.name %></h4>
+                    </div>
+                    <p>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<%- include("../partials/footer.ejs") %>

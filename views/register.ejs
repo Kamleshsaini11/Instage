@@ -1,0 +1,67 @@
+<%- include("./partials/header.ejs") %>
+<style>
+    body{
+        /* background: #; */
+        background-color: black;
+
+        color: white;
+        
+    }
+    input{
+        width:100%;
+    }
+   .jumbotron{
+    background-color: #aabbaa;
+    }
+    .form-group{
+        font-size: 20px;
+        font-weight: 300;
+        color: black;
+        
+    }
+    #privacy{
+        color:black;
+    }
+</style>
+<div class="container">
+<h1 style="text-align:center;">Sign Up</h1>
+<div style="width:70% ; margin:25px auto ; ">
+    
+    <div class="jumbotron">
+    <form action="/register" method="POST" >
+        
+        
+        <div class="form-group">
+            <label for="fname">First Name</label>
+           <input id="fname" type="text" placeholder="Tony" name="first" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input id="lname"type="text" placeholder="Stark" name="last">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email"type="email" placeholder="tonystar@gmail.com" name="email"required>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username"type="text" placeholder="Ironman" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="avtar">Profile Pic</label>
+            <input id="avtar"type="text" placeholder="Profile URL" name="avatar">
+        </div>
+        <div class="form-group">
+            <label for="pass">Password</label>
+        <input id="pass" type="password" placeholder="Password" name="password" required>
+        </div>
+    <div id="privacy">
+    By clicking Join Now , you agree to <strong>Instage's User Aggreement Privacy Policy</strong> and<strong> Cookie Policy</strong>. 
+</div>
+    <button class="btn btn-primary btn-lg btn-block">Join Now</button>
+    </form>
+    </div>
+</div>
+</div>
+<%- include("./partials/footer.ejs") %>
