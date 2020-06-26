@@ -4,6 +4,18 @@
 .thumbnail{
     padding:0;
 }
+.camp_img{
+    height: 400px;
+}
+.camp_img a img{
+    width: 100%;
+    height: 300px;
+}
+.camp_img_more img{
+    width: 100%;
+    height: 700px;
+}
+
 .thumbnail .caption-full{
     padding:10px;
 }

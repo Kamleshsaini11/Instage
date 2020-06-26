@@ -1,15 +1,95 @@
-<%- include("../partials/header.ejs") %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Instage</title>
+        <script data-ad-client="ca-pub-3320339824689774" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-    #top{
-        background: url('https://images.unsplash.com/photo-1570863102242-7d03ca0f4bd0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1391&q=80');
-        background-position: center;
-        background-size: cover;
-    }
-    #front{
-        text-align: center;
-    }
-</style>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+        <style>
+            #top{
+                background: url('https://images.unsplash.com/photo-1570863102242-7d03ca0f4bd0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1391&q=80');
+                background-position: center;
+                background-size: cover;
+                margin-top: 60px;
+            }
+            #front{
+                text-align: center;
+            }
+            
+            
+            .buttons{
+                margin-bottom: 15px;
+            }
+            .bottom{
+                background-color: black;
+                background: url('https://compass-ssl.xbox.com/assets/dc/48/dc486960-701e-421b-b145-70d04f3b85be.jpg?n=Game-Hub_Content-Placement-0_New-Releases-No-Copy_740x417_02.jpg');
+                margin-bottom: 0;
+                background-position: center;
+                background-size: cover;
+                color: white;
+            }
+            
+           
+            
+        </style>
+    </head>
+    <body>
+        
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="self">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#newbutt" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a href="/" class="navbar-brand" >
+                        <i class="glyphicon glyphicon-tree-deciduous"></i>  Instage
+                    </a>
+                    
+
+                </div>
+                
+                   
+                    <div class="collapse navbar-collapse" id="newbutt">
+                    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/campgrounds">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <% if(!currentUser){  %>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Sign Up</a></li>
+                        <%  } else {  %> 
+                            <li><a href="/user/<%= currentUser._id%>"><i class="glyphicon glyphicon-user"></i>  <%= currentUser.username%></a></li>                        
+                            <li><a href="/logout">Logout</a></li>
+                            <%  }  %>
+                    </ul>
+                </div>
+                <form action="/campgrounds" method="GET"  class="navbar-form"> 
+                    <div  class="form-group">
+                        <input type="text" name="search" placeholder="Search Post" class="form-control">
+                        <input type="submit" value="Search" class="btn btn-default">
+                    </div>
+                </form>
+        
+            </div>
+        </nav>
+        <div class="container">
+            <% if(error && error.length > 0) {%>
+            <div class="alert alert-danger" role="alert">
+                <%= error%>
+            </div>
+            <% } if(success && success.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+            <% }%>
+        </div>
+<div class="container">
 <div  class="row">
     <div class="col-sm-12 col-lg-12">
         <header id="top" class="jumbotron">
@@ -22,16 +102,19 @@
     </div>
 
 </div>
+</div>
 <div class="container">
+    <div class="row">
+        <a class="btn btn-warning btn-lg col-sm-12 col-md-4 buttons"href="/campgrounds/new">Add New Post</a>    
+        <a class="btn btn-default btn-lg col-sm-12 col-md-4 buttons"href="/mostliked">Most Liked Post</a>   
+        <a class="btn btn-success btn-lg col-sm-12 col-md-4 buttons"href="/mostcomment">Most Commented Post</a>
+    </div>
+   
     
-    <p>
-        <a class="btn btn-primary btn-lg"href="/campgrounds/new">Add New Post</a>
-        
-        </p>
     <div class="text-center row" style="display:flex; flex-wrap:wrap;">
         <% campgrounds.forEach(function(campground) { %>
-            <div class="col-md-4 col-sm-12">
-                <div class="thumbnail">
+            <div class="col-md-4 col-sm-6">
+                <div class="thumbnail camp_img">
                     <a href="/campgrounds/<%= campground._id %>"><img src="<%= campground.image %>" alt="Not Available"> </a>
                     <div class="caption">
                         <h4><%= campground.name %></h4>
@@ -44,4 +127,22 @@
         <% }) %>
     </div>
 </div>
-<%- include("../partials/footer.ejs") %>
+
+<footer>
+    <div class="container">
+        <div class="jumbotron bottom">
+            <p>Are you bored ?</p>  
+            <p>Now Enjoy our gaming area</p>
+            <p>
+                <a class="btn btn-danger btn-lg" href="https://abhi24gupta.github.io/" role="button">Color Game</a>
+                <a class="btn btn-danger btn-lg"href="https://abhinavwebd.github.io/" role ="button">TipTip</a>
+            </p>
+          </div>    
+    
+    </div>
+    
+</footer>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+    </html>

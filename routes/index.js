@@ -4,6 +4,7 @@ var router= express.Router({mergeParams:true});
 var passport  = require("passport");
 var User= require("../models/user");
 var Campground= require("../models/campground");
+var Comment= require("../models/comment");
 
 
 //  =================FRONT PAGE===========================================
@@ -24,8 +25,11 @@ router.get("/", function(req ,res){
         firstname:req.body.first,
         lastname:req.body.last,
         email:req.body.email,
-        avatar:req.body.avatar    
+        avatar:req.body.avatar
         });
+        if(newUser.avatar===null){
+            newUser.avatar="https://res.cloudinary.com/instage/image/upload/v1593144336/sample.jpg";
+        }
      User.register(newUser, req.body.password, function(err, user){
          if(err){
              req.flash("error", err.message);
@@ -63,6 +67,72 @@ router.get("/", function(req ,res){
  router.get("/about" , function(req, res){
      res.render("about");
  });
+ //================MOST LIKED ================================================
+ router.get("/mostliked" , function(req, res){
+    var query=[{$match:{}},
+        {$sort:{likes:-1}},
+        {$limit:1}
+    ];
+    Campground.aggregate(query,function(err,camp){
+          if (err)
+            console.log(err);
+          else{ 
+             
+            //   res.render("mostliked"  , { id:id  ,  nolikes:nolikes})
+            console.log("id of campground that has most likes "+camp[0]._id);
+            console.log("number of likes "+camp[0].likes);
+            Campground.findById(camp[0]._id).populate("comments").exec(function(err, foundcamp){
+                if(err){
+                    console.log(err)
+                }
+                else {
+                    console.log(foundcamp)
+                    res.render("campgrounds/show",{campground:foundcamp});
+                }
+            });
+            
+          }
+    });
+ });
+
+ //====================MOST COMMENTED POST ======================================
+ router.get("/mostcomment" , function(req, res){
+    Campground.aggregate([
+        // Project with an array length
+        { "$project": {
+            "name":1,
+            "image":1,
+            "imageId":1,
+            "description":1,
+            "author":1,
+            "comments":1,
+            "likes":1,
+            "date":1,
+            "length": { "$size": "$comments" }
+        }},
+        // Sort on the "length"
+        { "$sort": { "length": -1 } },
+        {"$limit":1}
+        ],function(err,camp){
+            if (err)
+                console.log(err);
+            else{
+                console.log("id of campground that has most comments "+camp[0]._id);
+                console.log("number of comments "+camp[0].length);
+
+            Campground.findById(camp[0]._id).populate("comments").exec(function(err, foundcamp){
+                if(err){
+                    console.log(err)
+                }
+                else {
+                    console.log(foundcamp)
+                    res.render("campgrounds/show",{campground:foundcamp});
+                }
+            });
+          }
+    });
+ });
+   
 
  //==================USER PROFILE PAGE===========================================
  router.get("/user/:id" , function(req, res){

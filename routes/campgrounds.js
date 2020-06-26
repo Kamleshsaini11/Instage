@@ -2,6 +2,7 @@
 var express= require("express");
 var router= express.Router({mergeParams:true});
 var Campground= require("../models/campground");
+var User= require("../models/user");
 var Like= require("../models/likes");
 var multer= require("multer");
 var storage= multer.diskStorage({
@@ -27,7 +28,26 @@ cloudinary.config({
 //=================MAIN PAGE==============================================
 router.get("/campgrounds", function(req, res){
     // GET ALL CAMPGROUND FROM 
-    Campground.find({}, function(err, allcampground){
+    // eval(require("locus"));
+    var noMatch = null;
+
+    if(req.query.search){
+        const regex =  new RegExp(escapeRegex(req.query.search) , "gi");
+
+        Campground.find({name: regex} , function(err, allCampgrounds){
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(allCampgrounds.length < 1){
+                    noMatch = "No Post match that query , Please Try Again.";
+                }
+                res.render("campgrounds/index",{campgrounds:allCampgrounds, noMatch: noMatch});
+            }
+        });
+    }
+    else {
+        Campground.find({}, function(err, allcampground){
         if(err){
             console.log(err);
         }
@@ -35,7 +55,7 @@ router.get("/campgrounds", function(req, res){
             res.render("campgrounds/index",{campgrounds:allcampground , currentUser : req.user});
         }
     });
-
+        }
 });
 
 // ====================CREATE CAMPGROUND AND ADD TO DB============================================== 
@@ -123,19 +143,21 @@ router.delete("/campgrounds/:id", check,function(req,res){
 });
 
 router.get("/campgrounds/:id/like" , isLoggedIn, function(req, res){
-        var author={
-            id:req.user._id
-        };
-        var camp={
-            id:req.params.id
-        };
-        var newlike= {author:author, camp:camp};
-        Like.create(newlike, function(err,newlylike){
-            if(err){
-                console.log(err);
-            }
-            else {
-                    Campground.findById(req.params.id  , function(err, foundcamp){
+    var author={
+        id:req.user._id
+    };
+    var camp={
+        id:req.params.id
+    };
+    var newlike= {author:author, camp:camp};
+    Like.findOne({"author.id":req.user._id,"camp.id":req.params.id},function(err,existingLike){
+        if (existingLike==null){
+            Like.create(newlike, function(err,newlylike){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    Campground.findById(req.params.id,function(err, foundcamp){
                         if(err){
                             console.log(err);
                         }
@@ -143,14 +165,30 @@ router.get("/campgrounds/:id/like" , isLoggedIn, function(req, res){
                             foundcamp.likes= foundcamp.likes + 1 ;
                             foundcamp.save();
                             res.render("../views/campgrounds/show",  {campground: foundcamp});
-                            }
-                           
-                        
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });   
+        }
+        else{
+            Like.deleteOne(existingLike,function(err,newlylike){
+                if (err) console.log("some went wrong");
+                else{
+                    Campground.findById(req.params.id,function(err, foundcamp){
+                        if(err){
+                            console.log(err);
+                        }
+                        else {
+                            foundcamp.likes= foundcamp.likes - 1 ;
+                            foundcamp.save();
+                            res.render("../views/campgrounds/show",  {campground: foundcamp});
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
-
 //=============MIDDLEWARE FUNCTION DESCRIBED==========================================
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
@@ -204,4 +242,9 @@ function check(req,res,next){
 //     res.redirect("/login");
 // }
 //====================CALLING FUNCTIONALITY====================================================================
-module.exports= router;
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+module.exports = router;
