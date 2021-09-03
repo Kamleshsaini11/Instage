@@ -21,10 +21,9 @@ var commentRoutes       =  require("./routes/comments"),
 
 //------------------------Mongoose DB Setup-----------------------------------------------------------------------
 
-
-mongoose.connect("mongodb+srv://abhinav24:golugupta19@cluster0.5ahtn.mongodb.net/Instage?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log( 'Database Connected' )).catch(err => console.log( err ));
-
-//mongoose.connect("mongodb://localhost/yelp", {useNewUrlParser: true, useUnifiedTopology: true});
+// Cluster0
+//  mongoose.connect("mongodb+srv://abhinav24:golugupta19@cluster0.5ahtn.mongodb.net/Cluster0?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log( 'Database Connected' )).catch(err => console.log( err ));
+mongoose.connect("mongodb://localhost/yelp", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyparser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

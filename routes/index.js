@@ -19,27 +19,13 @@ router.get("/", function(req ,res){
 
  //============= REGISTER POSTING ==========================================
  router.post("/register", function(req, res){
-     var newUser= new User(
-        {
-        username: req.body.username ,
-        firstname:req.body.first,
-        lastname:req.body.last,
-        email:req.body.email,
-        avatar:req.body.avatar
-        });
-        if(newUser.avatar===null){
-            newUser.avatar="https://res.cloudinary.com/instage/image/upload/v1593144336/sample.jpg";
-        }
-     User.register(newUser, req.body.password, function(err, user){
-         if(err){
-             req.flash("error", err.message);
-             return res.redirect("/register");
-         }
-           passport.authenticate("local")(req, res,function(){
-            req.flash("success", "Welcome "+ user.username + " to YelpCamp"); 
-            res.redirect("/campgrounds");
-         })
-     });
+  console.log(req.body);
+  console.log(req.body.etherCnt)
+     // var newUser= new User(
+     //    {
+     //    username: req.body.ether ,
+     //    });
+     // console.log(newUser.username);
  });
  
  // =============LOGIN FORM===================================================

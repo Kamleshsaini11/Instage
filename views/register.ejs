@@ -1,73 +1,8 @@
-<%- include("./partials/header.ejs") %>
-<style>
-    body{
-        /* background: #; */
-        background-color: black;
-
-        color: white;
-        
-    }
-    input{
-        width:100%;
-    }
-   .jumbotron{
-    background-color: #aabbaa;
-    }
-    .form-group{
-        font-size: 20px;
-        font-weight: 300;
-        color: black;
-        
-    }
-    #privacy{
-        color:black;
-    }
-</style>
-
-<div class="container">
-<div class="row">
-    <div class="col-sm-12 col-md-6">
-        <h1 style="text-align:center;">Sign Up</h1>
-<div style="width:100% ; margin:25px auto ; ">
-    
-    <div class="jumbotron">
-    <form action="/register" method="POST"  >
-        
-        
-        <div class="form-group">
-            <label for="fname">First Name</label>
-           <input id="fname" type="text" placeholder="Tony" name="first" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input id="lname"type="text" placeholder="Stark" name="last">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email"type="email" placeholder="tonystar@gmail.com" name="email"required>
-        </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input id="username"type="text" placeholder="Ironman" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Profile Picture</label>
-            <input type="text" value="https://res.cloudinary.com/instage/image/upload/v1593145501/default-profile-picture1_rstdy6.jpg" id="image" name="avatar" placeholder="Image URL">
-        </div>
-        <div class="form-group">
-            <label for="pass">Password</label>
-        <input id="pass" type="password" placeholder="Password" name="password" required>
-        </div>
-    <div id="privacy">
-    By clicking Join Now , you agree to <strong>Instage's User Aggreement Privacy Policy</strong> and<strong> Cookie Policy</strong>. 
-</div>
-    <button class="btn btn-primary btn-lg btn-block">Join Now</button>
-    </form>
+<form action="/register" method="POST"  >
+    <div class="form-group">
+        <label for="">Amount of ether to enter</label>
+       <input id="ether" type="text" placeholder="" name="etherCnt">
     </div>
-</div>
-    </div>
-</div>
-
-</div>
-<%- include("./partials/footer.ejs") %>
+    
+    <button>submit</button>
+</form>
